@@ -1,0 +1,36 @@
+body {
+    font-family: "Segoe UI", sans-serif;
+    background: linear-gradient(120deg, #f5f7fa, #e4ecff);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.navbar { background: linear-gradient(90deg, #8b0000, #d90429); }
+.nav-link { color: white !important; }
+.hero {
+    padding: 55px 35px;
+    border-radius: 25px;
+    background: linear-gradient(135deg, #ffffff, #ffe5e5);
+    box-shadow: 0 15px 40px rgba(0,0,0,.06);
+}
+.hero h1 { font-size: 42px; font-weight: 800; color: #a00000; }
+.card { border: none; border-radius: 18px; box-shadow: 0 8px 25px rgba(0,0,0,.06); transition: .3s; }
+.card:hover { transform: translateY(-4px); }
+.progress { height: 18px; border-radius: 20px; }
+.progress-bar { background: linear-gradient(90deg, #ff0033, #ff9900); }
+footer { margin-top: auto; background: #111; color: white; }
+.dashboard-box { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.03); }
+.requirement-list { font-size: 0.85rem; padding-left: 1.25rem; }
+.option-label { cursor: pointer; display: block; padding: 12px 16px; border: 1px solid #dee2e6; border-radius: 10px; margin-bottom: 8px; transition: 0.2s; }
+.option-label:hover { background-color: #f8f9fa; }
+.option-label.selected { background-color: #ffe5e5; border-color: #d90429; font-weight: 500; }
+.course-select-card { cursor: pointer; border: 2px solid transparent; transition: 0.2s; }
+.course-select-card.active { border-color: #d90429; background-color: #fff5f5; }
+
+.certificate-modal .modal-content {
+    border: 8px solid #d90429 !important;
+    background: #fffdfd;
+    background-image: radial-gradient(#ffe5e5 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+.cert-title { font-family: 'Georgia', serif; letter-spacing: 2px; }
