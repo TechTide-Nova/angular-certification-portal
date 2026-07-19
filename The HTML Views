@@ -15,3 +15,230 @@
         </div>
     </div>
 </div>
+<div class="dashboard-box">
+    <h2 class="mb-2 text-dark fw-bold"><i class="bi bi-journal-code text-danger"></i> Structured Academic Frameworks</h2>
+    <p class="text-muted mb-4">Our specialized curriculum tiers maps detailed technical requirements to specific production profiles.</p>
+    
+    <div class="row g-4">
+        <div class="col-md-4" ng-repeat="c in certifications">
+            <div class="card p-4 border border-light shadow-sm h-100 d-flex flex-column">
+                <span class="badge bg-danger align-self-start mb-3">{{c.id | uppercase}} COURSE</span>
+                <h4 class="fw-bold text-dark mb-1">{{c.name}}</h4>
+                <span class="text-muted small mb-3"><strong>Focus Matrix:</strong> {{c.level}}</span>
+                <p class="text-muted small mb-4">{{c.details}}</p>
+                <div class="mt-auto border-top pt-3">
+                    <button class="btn btn-outline-danger w-100" ng-click="selectAndGoToExam(c.id)">Initialize This Mock Exam</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="text-center mb-5">
+    <h2 class="fw-bold text-dark">Portal Entry Level Plan Tracks</h2>
+    <p class="text-muted">Gain instantly available sandboxed execution environments, test vouchers, and graded progress trackers.</p>
+</div>
+<div class="row g-4 align-items-center justify-content-center">
+    <div class="col-md-4" ng-repeat="tier in pricingPlans">
+        <div class="card p-4 bg-white shadow-sm h-100" ng-style="tier.isPopular ? {'border':'2px solid #d90429'}:{}">
+            <h4 class="fw-bold text-center text-dark">{{tier.title}}</h4>
+            <div class="text-center my-3">
+                <span class="display-6 fw-bold text-danger">₹{{tier.cost}}</span><span class="text-muted">/{{tier.term}}</span>
+            </div>
+            <ul class="list-unstyled mb-4 small text-muted">
+                <li class="mb-2" ng-repeat="p in tier.perks"><i class="bi bi-check2 text-success me-2"></i> {{p}}</li>
+            </ul>
+            <button class="btn w-100 rounded-pill fw-bold" ng-class="tier.isPopular ? 'btn-danger':'btn-outline-dark'" ng-click="buyTier(tier.title)">Acquire Credentials Pass</button>
+        </div>
+    </div>
+</div>
+<div class="row g-4">
+    <div class="col-md-4">
+        <div class="dashboard-box text-center h-100">
+            <i class="bi bi-shield-check text-danger" style="font-size: 4.5rem;"></i>
+            <h3 class="fw-bold mt-2">{{student.name}}</h3>
+            <span class="badge bg-secondary px-3 py-2">Premium Matrix Active</span>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="dashboard-box h-100">
+            <h4 class="fw-bold text-dark mb-3">Active Assessment Syllabus Index</h4>
+            <div class="progress mb-4">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" ng-style="{'width': student.progress + '%'}">{{student.progress}}%</div>
+            </div>
+            <h6 class="fw-bold mb-2">Completed Core Vectors:</h6>
+            <ul class="list-group list-group-flush mb-0">
+                <li class="list-group-item bg-transparent text-success py-2 small" ng-repeat="item in student.completed">
+                    <i class="bi bi-check-circle-fill me-2"></i> {{item}}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="dashboard-box position-relative">
+    <div ng-if="!examStarted">
+        <h3 class="fw-bold text-dark mb-2"><i class="bi bi-sliders text-danger"></i> Initialize Assessment Parameters</h3>
+        <p class="text-muted mb-4">Select an educational course catalog from the tracks below to synthesize exactly **10 technical core exam items**.</p>
+        
+        <div class="row g-3 mb-4">
+            <div class="col-md-4" ng-repeat="track in courseTracks">
+                <div class="card p-3 h-100 course-select-card" ng-class="{'active': selectedTrack.id === track.id}" ng-click="chooseTrack(track)">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="badge bg-dark">{{track.id | uppercase}}</span>
+                        <i class="bi bi-check-circle-fill text-danger" ng-if="selectedTrack.id === track.id"></i>
+                    </div>
+                    <h5 class="fw-bold text-dark mb-1 small">{{track.name}}</h5>
+                    <p class="text-muted small mb-0" style="font-size:0.78rem;">{{track.summary}}</p>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn btn-danger btn-lg w-100 rounded-pill fw-bold shadow-sm" ng-click="generateAndStartTest()">
+            <i class="bi bi-rocket-takeoff"></i> Construct 10-Question Target Simulator
+        </button>
+    </div>
+
+    <div ng-if="examStarted">
+        <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
+            <div>
+                <span class="badge bg-danger mb-1 text-uppercase font-monospace">{{selectedTrack.name}} Evaluation</span>
+                <h3 class="fw-bold mb-0 text-dark"><i class="bi bi-stopwatch text-danger"></i> Live Evaluation Session</h3>
+            </div>
+            <div class="text-end" ng-if="!examSubmitted">
+                <span class="badge bg-dark fs-5 p-2 px-3"><i class="bi bi-clock"></i> {{timer}}s Remaining</span>
+            </div>
+        </div>
+
+        <div class="alert p-4 rounded-4 shadow-sm mb-4 border-0" ng-if="examSubmitted" ng-class="score >= 7 ? 'alert-success bg-opacity-25':'alert-warning bg-opacity-25'">
+            <div class="d-flex align-items-center gap-3 mb-2">
+                <i class="bi fs-1" ng-class="score >= 7 ? 'bi-trophy-fill text-success':'bi-exclamation-octagon-fill text-warning'"></i>
+                <div>
+                    <h3 class="fw-bold mb-0 text-dark">Grading Output Finalized</h3>
+                    <p class="mb-0 text-muted">Course Certification Benchmark requires a minimum passing index score of 70% (7/10 Correct answers).</p>
+                </div>
+            </div>
+            <hr>
+            <h4 class="mb-2">Calculated Performance Ratio: <span class="fw-bold text-danger">{{score}} / 10 Metrics Match</span> ({{score * 10}}%)</h4>
+            <span class="badge fs-6 mb-3" ng-class="score >= 7 ? 'bg-success':'bg-danger'">{{score >= 7 ? 'CREDENTIAL STATUS: PASSED':'CREDENTIAL STATUS: UNVERIFIED'}}</span>
+            <div class="mt-2">
+                <button class="btn btn-outline-dark rounded-pill px-4 fw-bold small" ng-click="resetSandboxEnvironment()">Return to Course Initialization Parameters</button>
+                <button class="btn btn-success rounded-pill px-4 fw-bold small ms-2" ng-if="score >= 7" ng-click="generateCertificate()"><i class="bi bi-award"></i> View Certificate</button>
+            </div>
+        </div>
+
+        <div class="card p-4 bg-light border-0 mb-4 shadow-sm" ng-repeat="qItem in activeQuestionSet" ng-if="!showCertificate">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="badge bg-secondary">Item Objective Block #{{$index + 1}} of 10</span>
+                <span class="badge bg-light text-dark text-uppercase font-monospace border">{{qItem.type}}</span>
+            </div>
+            <h5 class="fw-bold text-dark mb-3">{{qItem.prompt}}</h5>
+            
+            <div ng-if="qItem.type === 'multiple-choice'">
+                <label class="option-label" ng-repeat="optionString in qItem.choices" ng-class="{'selected': selectedAnswers[$parent.$index] === optionString}">
+                    <input type="radio" name="radioGroup-{{$parent.$index}}" value="{{optionString}}" ng-model="selectedAnswers[$parent.$index]" ng-disabled="examSubmitted" class="me-2 text-danger">
+                    {{optionString}}
+                </label>
+            </div>
+
+            <div ng-if="qItem.type === 'text-formula'">
+                <input type="text" class="form-control p-3 bg-white text-monospace font-weight-bold" ng-model="selectedAnswers[$index]" ng-disabled="examSubmitted" placeholder="Input the exact keyword directive case string pattern context here...">
+                <small class="text-muted d-block mt-2"><i class="bi bi-info-circle"></i> Text matches are processed automatically via exact code compliance checks.</small>
+            </div>
+
+            <div class="mt-3 p-3 rounded-3 text-white font-monospace small shadow-sm" ng-if="examSubmitted" ng-class="isAnswerCorrect($index, qItem) ? 'bg-success':'bg-danger'">
+                <div ng-if="isAnswerCorrect($index, qItem)">
+                    <i class="bi bi-check-circle-fill"></i> Evaluation Validation Succeeded! Matched: "{{qItem.solution}}"
+                </div>
+                <div ng-if="!isAnswerCorrect($index, qItem)">
+                    <i class="bi bi-x-circle-fill"></i> Evaluation Validation Mismatch! 
+                    <br><span class="opacity-75">Your input value: "{{selectedAnswers[$index] || 'No answer submitted'}}". Target solution token expected:</span> <strong class="underline">"{{qItem.solution}}"</strong>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn btn-danger w-100 p-3 rounded-pill fw-bold fs-5 shadow mt-2" ng-click="processGradingRoutine()" ng-if="!examSubmitted">Terminate Testing & Push Assessment Logs</button>
+    </div>
+</div>
+
+<div class="modal d-block certificate-modal" tabindex="-1" style="background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);" ng-if="showCertificate">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content shadow-lg p-2 rounded-4">
+            <div class="modal-body text-center p-5">
+                <i class="bi bi-award-fill text-danger mb-2" style="font-size: 5.5rem;"></i>
+                <h1 class="fw-bold text-dark mt-2 cert-title">Certificate of Achievement</h1>
+                <p class="fs-5 text-muted mb-4 mt-3">This officially certifies that</p>
+                <h2 class="fw-bold text-danger mb-4 border-bottom border-danger border-2 pb-2 d-inline-block px-4">{{user || 'Developer Candidate'}}</h2>
+                <p class="fs-5 text-muted mb-4">has successfully completed the evaluation and passed the</p>
+                <h3 class="fw-bold text-dark mb-5">{{selectedTrack.name}} Exam</h3>
+                <div class="d-flex justify-content-around align-items-center text-dark bg-light rounded-3 p-3 mx-4 shadow-sm">
+                    <div><small class="text-muted d-block text-uppercase">Final Score</small> <span class="fw-bold fs-5 text-success">{{score * 10}}%</span></div>
+                    <div class="border-start border-2 border-secondary h-50"></div>
+                    <div><small class="text-muted d-block text-uppercase">Issue Date</small> <span class="fw-bold fs-5">{{currentDate | date:'mediumDate'}}</span></div>
+                    <div class="border-start border-2 border-secondary h-50"></div>
+                    <div><small class="text-muted d-block text-uppercase">Credential ID</small> <span class="fw-bold fs-5 font-monospace">ANG-{{score*100}}-{{currentDate | date:'yy'}}</span></div>
+                </div>
+                <button class="btn btn-dark rounded-pill px-5 mt-5 fw-bold" ng-click="closeCertificate()">Close Certificate</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row g-4">
+    <div class="col-md-5">
+        <div class="dashboard-box bg-dark text-white h-100 p-4 d-flex flex-column justify-content-center">
+            <h3 class="fw-bold mb-3 text-warning"><i class="bi bi-geo-alt"></i> Command Center HQ</h3>
+            <hr class="bg-secondary">
+            <ul class="list-unstyled text-light fs-6">
+                <li class="mb-3"><i class="bi bi-building text-danger me-2"></i> Architecture Towers, Tech District</li>
+                <li class="mb-3"><i class="bi bi-envelope text-danger me-2"></i> support@angularcertification.org</li>
+                <li class="mb-3"><i class="bi bi-telephone text-danger me-2"></i> +1 (800) 555-ANGULAR</li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-7">
+        <div class="dashboard-box bg-white">
+            <h3 class="fw-bold mb-3 text-dark"><i class="bi bi-chat-right-text text-danger"></i> Dispatch Query Ticket</h3>
+            <form name="contactForm" ng-submit="sendTicket(contactForm)" novalidate>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Full Identity Name</label>
+                    <input type="text" name="clientName" class="form-control p-2" ng-model="ticket.name" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Electronic Return Mail Address (Email)</label>
+                    <input type="email" name="clientEmail" class="form-control p-2" ng-model="ticket.email" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Description Context Log (Your Message)</label>
+                    <textarea name="clientMessage" rows="4" class="form-control p-2" ng-model="ticket.msg" ng-minlength="15" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-danger px-5 py-2 rounded-pill fw-bold mt-2" ng-disabled="contactForm.$invalid">Dispatch Ticket Logs</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="dashboard-box shadow">
+            <h3 class="text-center fw-bold mb-4"><i class="bi bi-shield-lock text-danger"></i> Secure Gate</h3>
+            <div class="alert alert-warning small py-2 shadow-sm" ng-if="validationError"><i class="bi bi-exclamation-triangle-fill me-1"></i> {{validationError}}</div>
+            <form ng-submit="login()">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Identifier Email</label>
+                    <input type="email" class="form-control p-3" ng-model="loginData.email" placeholder="dev@domain.com" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Token Keys (Password)</label>
+                    <input type="password" class="form-control p-3" ng-model="loginData.password" placeholder="••••••••" required>
+                </div>
+                <div class="card p-3 bg-light border-0 mb-4">
+                    <span class="fw-bold small text-secondary mb-1">Complexity Targets Matrix:</span>
+                    <ul class="requirement-list mb-0 text-muted">
+                        <li ng-class="{'text-success fw-bold': loginData.password.length >= 8}">At least 8 characters length</li>
+                        <li ng-class="{'text-success fw-bold': hasUppercase(loginData.password)}">At least 1 Uppercase key [A-Z]</li>
+                        <li ng-class="{'text-success fw-bold': hasLowercase(loginData.password)}">At least 1 Lowercase key [a-z]</li>
+                        <li ng-class="{'text-success fw-bold': hasSpecialChar(loginData.password)}">At least 1 Special character [@$!%*?&]</li>
+                    </ul>
+                </div>
+                <button type="submit" class="btn btn-danger w-100 p-3 rounded-pill fw-bold fs-5">Authorize Session</button>
+            </form>
+        </div>
+    </div>
+</div>
