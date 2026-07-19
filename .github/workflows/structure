@@ -1,0 +1,15 @@
+angular-cert-portal/
+├── index.html            # Main entry point and layout shell
+├── css/
+│   └── style.css         # Premium custom styling (glassmorphism, typography, animations)
+├── js/
+│   ├── app.js            # AngularJS application bootstrap, config, and routing
+│   └── controllers.js    # Consolidated controller state logic
+└── views/                # Separate route template files
+    ├── home.html
+    ├── certifications.html
+    ├── subscriptions.html
+    ├── dashboard.html
+    ├── exam.html
+    ├── contact.html
+    └── login.html
